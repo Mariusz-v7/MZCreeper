@@ -1,0 +1,10 @@
+config/
+cache/
+lib/
+training_reports/
+*.swp
+*.swo
+*~
+*.out
+*.pyc
+*.log
