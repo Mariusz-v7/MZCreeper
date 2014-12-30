@@ -9,6 +9,7 @@ config/
 errors/
 lib/
 training_reports/
+squad/
 
 For automatic logging in:
 -------------------------

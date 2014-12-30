@@ -3,6 +3,7 @@ config/
 cache/
 lib/
 training_reports/
+squad/
 *.swp
 *.swo
 *~
