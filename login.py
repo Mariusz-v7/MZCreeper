@@ -45,5 +45,5 @@ def login(driver):
     
     if not logged_in:
         print "failed to login"
-        driver.save_screenshot(str(t)+"_login_failed.png")
+        driver.save_screenshot("errors/"+str(t)+"_login_failed.png")
         exit()
