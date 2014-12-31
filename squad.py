@@ -7,6 +7,7 @@ import os
 
 def squad(driver):
     driver.get("http://www.managerzone.com/?p=players&sub=alt")
+    driver.find_element_by_tag_name('head')#wait for load
 
     print driver.current_url
 

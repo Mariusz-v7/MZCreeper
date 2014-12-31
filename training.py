@@ -14,6 +14,7 @@ def training(driver):
     #etc
     ###
     driver.get("http://www.managerzone.com/?p=training_report")
+    driver.find_element_by_tag_name('head')#wait for load
 
     print driver.current_url
 
