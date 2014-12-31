@@ -4,12 +4,12 @@ Automatically get your training reports and squad data.
 
 How to install
 --------------
-Create the following dirs in project root:
-config/
-errors/
-lib/
-training_reports/
-squad/
+
+Requirements
+------------
+selenium
+pyquery
+phantomjs or firefox
 
 For automatic logging in:
 -------------------------
