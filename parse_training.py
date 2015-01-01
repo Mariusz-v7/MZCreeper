@@ -43,6 +43,11 @@ def get_attr(label, attr, label_index):
 
         r1 = img('img').attr['src']
         r1 = re.findall(r'\d+', r1)[-1]
+        #skill lbl up?
+        r2 = img('img').attr['src']
+        r2 = re.findall(r'ball\.png', r2)
+        if len(r2) > 0:
+            ret.append('+1')
 
         ret.append(r1)
 
@@ -99,7 +104,9 @@ def parse():
                         i += 1
                         continue
                     file_.write(labels[i]+": ")
-                    if len(atr) == 2:
+                    if len(atr) == 3:
+                        file_.write(atr[0]+", "+atr[1]+", "+atr[2]+"\r\n")
+                    elif len(atr) == 2:
                         file_.write(atr[0]+", "+atr[1]+"\r\n")
                     elif len(atr) == 1:
                         file_.write(atr[0]+"\r\n")
