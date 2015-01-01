@@ -6,7 +6,6 @@ from selenium import webdriver
 import login
 import training
 import squad
-import parse_squads
 
 ########################################################################################
 driver = webdriver.PhantomJS("lib/phantomjs")
@@ -22,12 +21,13 @@ if not os.path.exists("training_reports"):
     os.makedirs("training_reports")
 if not os.path.exists("errors"):
     os.makedirs("errors")
+if not os.path.exists("upload"):
+    os.makedirs("upload")
 
-#login.login(driver)
-#training.training(driver)
-#squad.squad(driver)
+login.login(driver)
+training.training(driver)
+squad.squad(driver)
 
-parse_squads.parse()
 
 
 driver.quit()

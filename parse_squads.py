@@ -1,5 +1,6 @@
 import os
 from pyquery import PyQuery   
+import shutil
 
 def get_id(row):
     #id is in player url
