@@ -18,13 +18,23 @@ def training(driver):
 
     print driver.current_url
 
-    date = time.strftime("%Y-%m-%d")
+    today_date = time.strftime("%Y-%m-%d")
+    today_daynumber = int(time.strftime("%w"))
+    week_number = time.strftime("%W")
 
-    if not os.path.exists("training_reports/"+date):
-        os.makedirs("training_reports/"+date)
+    monday_date = datetime.datetime.strptime(today_date, "%Y-%m-%d")
+    monday_date = monday_date + datetime.timedelta(days = -today_daynumber)
 
     days_names = ["weekly", "monday", "tuesday", "wednesday", "thurstay", "friday", "saturday"]
-    for i in range(0, 7):
+    for i in range(1, today_daynumber + 1):
+        training_date_ = monday_date + datetime.timedelta(days = +(i - 1))
+        training_date = training_date_.strftime("%Y-%m-%d")
+
+        if os.path.exists("training_reports/"+training_date+".html"):
+            print 'skip ', days_names[i]
+            continue
+
+
         print days_names[i] + " training"
 
         link = driver.find_element_by_id("training_report_header_"+str(i)).find_elements_by_tag_name("a")[0].click()
@@ -34,29 +44,8 @@ def training(driver):
         training_parent = driver.find_element_by_id("training_report")
         training_table = training_parent.find_elements_by_class_name('report_table');
 
-        file_ = open("training_reports/"+date+"/report_"+days_names[i]+".html", 'w')
+        file_ = open("training_reports/"+training_date+".html", 'w')
         file_.write(training_parent.get_attribute("innerHTML").encode('UTF-8'))
         file_.close()
-
-
-###
-#   tabi = 0
-#   for tab in training_table:
-#       divs = tab.find_elements_by_tag_name('div')
-#       if tabi > 0:
-#           name = divs[3].text
-#           skill = divs[5].text
-#           progress = divs[9].find_element_by_tag_name('img').get_attribute('src')
-#           progress = progress.split('/')
-#           progress = progress[-1]
-#        
-#           test = db.Execute("SELECT `id` FROM `training` WHERE `player`="+db.prepare(name)+" AND `date`=CURRENT_DATE()")
-#           if test.EOF:
-#               db.Execute("""INSERT INTO `training`(`player`,`skill`,`progress`,`date`) 
-#                   VALUES("""+db.prepare(name)+""","""+db.prepare(skill)+""","""+db.prepare(progress)+""",CURRENT_DATE())""")
-#       tabi += 1
-    
-
-
 
 
