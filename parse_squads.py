@@ -18,10 +18,8 @@ def parse():
         #driver.get("squad/"+squad+"/squad.html")
         file_path = "squad/"+squad
 
-        if os.path.exists(file_path+"/squad.txt"):
-            continue
 
-        file_ = open(file_path+"/squad.html")
+        file_ = open(file_path)
         html = file_.readlines()
 
         str_ = ""
@@ -47,13 +45,18 @@ def parse():
             i += 1
 
 
-        file_ = open(file_path+"/squad.txt", "w")
+        file_ = open("upload/"+file_path+".xml", "w")
+        date = file_path.split('/')[-1]
+        file_.write('<squad>')
+        file_.write('<date>'+date[0:-5]+'</date>')
         for player in players:
             i = 0
+            file_.write('<player>')
             for atr in player:
-                file_.write(labels[i]+": ")
-                file_.write(atr+"\r\n")
+                file_.write('<'+labels[i]+'>')
+                file_.write(atr)
+                file_.write('</'+labels[i]+'>')
                 i += 1
-
-            file_.write('\r\n\r\n')
+            file_.write('</player>')
+        file_.write('</squad>')
         file_.close()

@@ -25,6 +25,8 @@ if not os.path.exists("upload"):
     os.makedirs("upload")
 if not os.path.exists("upload/training_reports"):
     os.makedirs("upload/training_reports")
+if not os.path.exists("upload/squad"):
+    os.makedirs("upload/squad")
 
 login.login(driver)
 training.training(driver)
