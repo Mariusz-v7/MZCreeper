@@ -1,6 +1,7 @@
 import os
 from pyquery import PyQuery   
 import shutil
+import re
 
 def get_id(row):
     #id is in player url
@@ -39,9 +40,19 @@ def parse():
         for row in table.items():
             players.append([])
             players[i].append(get_id(row))
+            l = 1
             for arg in row('td').items():
                 #print arg.text()
-                players[i].append(arg.text().encode('UTF-8'))
+                if labels[l] == 'Salary' or labels[l] == 'Value':
+                    val = arg.text().encode('UTF-8')
+                    arr = [int(s) for s in val if s.isdigit()]
+                    text = ''
+                    for s in arr:
+                        text += str(s)
+                    players[i].append(text)
+                else:
+                    players[i].append(arg.text().encode('UTF-8'))
+                l += 1
             i += 1
 
 

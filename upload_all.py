@@ -7,7 +7,8 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 
 max_wait_time = 60
-page_url = "http://gamesstats.hopto.org/"
+#page_url = "http://gamesstats.hopto.org/"
+page_url = "http://gamesstats.loc/"
 
 def login(driver):
     if not os.path.exists("config/logings"):
