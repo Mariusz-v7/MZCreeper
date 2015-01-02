@@ -108,11 +108,11 @@ def parse():
                 #file_.write(labels[i]+": ")
                 file_.write('<'+labels[i]+'>')
                 if len(atr) == 3:
-                    file_.write(str(atr[0])+", "+str(atr[1])+", "+str(atr[2])+"\r\n")
+                    file_.write(str(atr[0])+", "+str(atr[1])+", "+str(atr[2]))
                 elif len(atr) == 2:
-                    file_.write(str(atr[0])+", "+str(atr[1])+"\r\n")
+                    file_.write(str(atr[0])+", "+str(atr[1]))
                 elif len(atr) == 1:
-                    file_.write(str(atr[0])+"\r\n")
+                    file_.write(str(atr[0]))
                 file_.write('</'+labels[i]+'>')
                 i += 1
 
