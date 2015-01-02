@@ -63,66 +63,61 @@ def parse():
         #driver.get("squad/"+squad+"/squad.html")
         file_path = "training_reports/"+training
 
-        days_names = ["weekly", "monday", "tuesday", "wednesday", "thurstay", "friday", "saturday"]
-        for d in range(1, 7):
-            if not os.path.exists(file_path+"/report_"+days_names[d]+".html"):
-                continue
-            if os.path.exists(file_path+"/report_"+days_names[d]+".txt"):
-                continue
 
-            file_ = open(file_path+"/report_"+days_names[d]+".html")
-            html = file_.readlines()
+        file_ = open(file_path)
+        html = file_.readlines()
 
-            str_ = ""
-            for s in html:
-                str_ += s
+        str_ = ""
+        for s in html:
+            str_ += s
 
-            parser = PyQuery(str_)
+        parser = PyQuery(str_)
 
-            head = parser('thead>tr>th')
-            labels = []
-            labels.append('id')
-            for label in head.items():
-                labels.append(label.text())
-            ##
+        head = parser('thead>tr>th')
+        labels = []
+        labels.append('id')
+        for label in head.items():
+            labels.append(label.text())
+        ##
 
-            table = parser('tbody>tr')
-            players = []
-            j = 0
-            for row in table.items():
-                i = 0
-                players.append([])
-                players[j].append(get_attr(labels[i], row, i))
-                for attr in row('td').items():
+        table = parser('tbody>tr')
+        players = []
+        j = 0
+        for row in table.items():
+            i = 0
+            players.append([])
+            players[j].append(get_attr(labels[i], row, i))
+            for attr in row('td').items():
+                i += 1
+                players[j].append(get_attr(labels[i], attr, i))
+            j += 1
+
+
+
+        file_ = open("upload/"+file_path+".xml", "w")
+        file_.write('<training>')
+        date = file_path.split('/')[-1]
+        file_.write('<date>'+date[0:-5]+'</date>')
+        for player in players:
+            i = 0
+            file_.write('<player>')
+            for atr in player:
+                if len(atr) == 0:
                     i += 1
-                    players[j].append(get_attr(labels[i], attr, i))
-                j += 1
+                    continue
+                #file_.write(labels[i]+": ")
+                file_.write('<'+labels[i]+'>')
+                if len(atr) == 3:
+                    file_.write(str(atr[0])+", "+str(atr[1])+", "+str(atr[2])+"\r\n")
+                elif len(atr) == 2:
+                    file_.write(str(atr[0])+", "+str(atr[1])+"\r\n")
+                elif len(atr) == 1:
+                    file_.write(str(atr[0])+"\r\n")
+                file_.write('</'+labels[i]+'>')
+                i += 1
 
+            file_.write('</player>')
 
+        file_.write('</training>')
+        file_.close()
 
-            file_ = open(file_path+"/report_"+days_names[d]+".txt", "w")
-            file_.write('<training>')
-            file_.write('<date>00-00-00</date>')
-            for player in players:
-                i = 0
-                file_.write('<player>')
-                for atr in player:
-                    if len(atr) == 0:
-                        i += 1
-                        continue
-                    #file_.write(labels[i]+": ")
-                    file_.write('<'+labels[i]+'>')
-                    if len(atr) == 3:
-                        file_.write(str(atr[0])+", "+str(atr[1])+", "+str(atr[2])+"\r\n")
-                    elif len(atr) == 2:
-                        file_.write(str(atr[0])+", "+str(atr[1])+"\r\n")
-                    elif len(atr) == 1:
-                        file_.write(str(atr[0])+"\r\n")
-                    file_.write('</'+labels[i]+'>')
-                    i += 1
-
-                file_.write('</player>')
-
-            file_.write('</training>')
-            file_.close()
- 
