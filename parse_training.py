@@ -97,21 +97,28 @@ def parse():
 
 
             file_ = open(file_path+"/report_"+days_names[d]+".txt", "w")
+            file_.write('<training>')
+            file_.write('<date>00-00-00</date>')
             for player in players:
                 i = 0
+                file_.write('<player>')
                 for atr in player:
                     if len(atr) == 0:
                         i += 1
                         continue
-                    file_.write(labels[i]+": ")
+                    #file_.write(labels[i]+": ")
+                    file_.write('<'+labels[i]+'>')
                     if len(atr) == 3:
                         file_.write(atr[0]+", "+atr[1]+", "+atr[2]+"\r\n")
                     elif len(atr) == 2:
                         file_.write(atr[0]+", "+atr[1]+"\r\n")
                     elif len(atr) == 1:
                         file_.write(atr[0]+"\r\n")
+                    file_.write('</'+labels[i]+'>')
                     i += 1
 
-                file_.write('\r\n\r\n')
+                file_.write('</player>')
+
+            file_.write('</training>')
             file_.close()
  
