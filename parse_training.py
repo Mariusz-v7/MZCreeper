@@ -23,6 +23,10 @@ def get_attr(label, attr, label_index):
         r = attr('span').text()
         ret.append(r)
     if label == 'Change':
+        #0 trainer or coach
+        #1 progress
+        #3 lvlup?
+        arr = [0, 0, 0]
         imgs = attr('img')
         if len(imgs) == 2:
             #trener lub oboz
@@ -31,25 +35,25 @@ def get_attr(label, attr, label_index):
             r1 = r1.split('/')
             r1 = r1[-1]
             if r1 == 'coach.png':
-                ret.append('coach')
+                arr[0] = 'coach'
             elif r1 == 'training_camp.png':
-                ret.append('camp')
+                arr[0] = 'camp'
             else:
-                ret.append(r1)
+                arr[0] = r1
             #
             img = attr('img:last-child')
         else:
             img = attr('img')
 
         r1 = img('img').attr['src']
-        r1 = re.findall(r'\d+', r1)[-1]
-        #skill lbl up?
+        arr[1] = re.findall(r'\d+', r1)[-1]
+        #skill lvl up?
         r2 = img('img').attr['src']
         r2 = re.findall(r'ball\.png', r2)
         if len(r2) > 0:
-            ret.append('+1')
+            arr[2] = '+1'
+        ret = arr
 
-        ret.append(r1)
 
     return ret
 
@@ -109,11 +113,11 @@ def parse():
                     #file_.write(labels[i]+": ")
                     file_.write('<'+labels[i]+'>')
                     if len(atr) == 3:
-                        file_.write(atr[0]+", "+atr[1]+", "+atr[2]+"\r\n")
+                        file_.write(str(atr[0])+", "+str(atr[1])+", "+str(atr[2])+"\r\n")
                     elif len(atr) == 2:
-                        file_.write(atr[0]+", "+atr[1]+"\r\n")
+                        file_.write(str(atr[0])+", "+str(atr[1])+"\r\n")
                     elif len(atr) == 1:
-                        file_.write(atr[0]+"\r\n")
+                        file_.write(str(atr[0])+"\r\n")
                     file_.write('</'+labels[i]+'>')
                     i += 1
 
