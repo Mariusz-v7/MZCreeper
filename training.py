@@ -29,7 +29,7 @@ def training(driver):
 
     days_names = ["weekly", "monday", "tuesday", "wednesday", "thurstay", "friday", "saturday"]
     for i in range(1, today_daynumber + 1):
-        training_date_ = monday_date + datetime.timedelta(days = +(i - 1))
+        training_date_ = monday_date + datetime.timedelta(days = +(i))
         training_date = training_date_.strftime("%Y-%m-%d")
 
         if os.path.exists("training_reports/"+training_date+".html"):
@@ -40,7 +40,11 @@ def training(driver):
         print i, days_names[i] + " training"
 
         time.sleep(5)
-        link = driver.find_element_by_id("training_report_header_"+str(i)).find_elements_by_tag_name("a")[0].click()
+        try:
+            link = driver.find_element_by_id("training_report_header_"+str(i)).find_elements_by_tag_name("a")[0].click()
+        except Exception:
+            pass
+
         time.sleep(5)
         wait = ui.WebDriverWait(driver, 30)
         wait.until(lambda driver: driver.find_element_by_id("training_report"))

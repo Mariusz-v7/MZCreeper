@@ -7,10 +7,18 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 
 max_wait_time = 60
-page_url = "http://gamesstats.hopto.org/"
+#page_url = "http://gamesstats.hopto.org/"
 #page_url = "http://gamesstats.loc/"
 
+
+
 def login(driver):
+    file_ = open("config/upload")
+    page_url = file_.readlines()
+    page_url = page_url[-1]#\n
+    page_url = page_url[0:-1]#\n
+
+
     if not os.path.exists("config/logings"):
         login = raw_input("login: ")
     else:
@@ -57,11 +65,17 @@ def login(driver):
         exit()
 
 def training(driver):
+    file_ = open("config/upload")
+    page_url = file_.readlines()
+    page_url = page_url[-1]
+    page_url = page_url[0:-1]+"/upload" #\n
+
 
     trainings = os.listdir("upload/training_reports")
     for training in trainings:
-        driver.get(page_url+"/upload")
+        driver.get(page_url)
         driver.find_element_by_tag_name('head')
+        driver.save_screenshot("errors/"+str(page_url)+"_logings_failed.png")
 
 
         file_ = open("upload/training_reports/"+training)
@@ -74,10 +88,15 @@ def training(driver):
         os.remove("upload/training_reports/"+training)
 
 def squad(driver):
+    file_ = open("config/upload")
+    page_url = file_.readlines()
+    page_url = page_url[-1]
+    page_url = page_url[0:-1]+"/upload" #\n
+
 
     trainings = os.listdir("upload/squad")
     for training in trainings:
-        driver.get(page_url+"/upload")
+        driver.get(page_url)
         driver.find_element_by_tag_name('head')
 
         select = Select(driver.find_element_by_tag_name("select"))
