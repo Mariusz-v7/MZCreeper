@@ -5,6 +5,8 @@ import login
 import time
 import datetime
 import os
+import selenium.webdriver as webdriver
+import selenium.webdriver.support.ui as ui
 
 
 def training(driver):
@@ -35,10 +37,16 @@ def training(driver):
             continue
 
 
-        print days_names[i] + " training"
+        print i, days_names[i] + " training"
 
+        time.sleep(5)
         link = driver.find_element_by_id("training_report_header_"+str(i)).find_elements_by_tag_name("a")[0].click()
         time.sleep(5)
+        wait = ui.WebDriverWait(driver, 30)
+        wait.until(lambda driver: driver.find_element_by_id("training_report"))
+
+
+
 
 
         training_parent = driver.find_element_by_id("training_report")
