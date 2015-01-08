@@ -66,6 +66,8 @@ def parse():
 
         file_ = open(file_path)
         html = file_.readlines()
+        if len(html) == 0:
+            continue
 
         str_ = ""
         for s in html:
