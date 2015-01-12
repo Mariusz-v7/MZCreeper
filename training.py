@@ -46,8 +46,8 @@ def training(driver):
             pass
 
         time.sleep(5)
-        wait = ui.WebDriverWait(driver, 30)
-        wait.until(lambda driver: driver.find_element_by_id("training_report"))
+        #wait = ui.WebDriverWait(driver, 30)
+        #wait.until(lambda driver: driver.find_element_by_id("training_report"))
 
 
 
