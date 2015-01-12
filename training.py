@@ -39,13 +39,13 @@ def training(driver):
 
         print i, days_names[i] + " training"
 
-        time.sleep(5)
+        time.sleep(30)
         try:
             link = driver.find_element_by_id("training_report_header_"+str(i)).find_elements_by_tag_name("a")[0].click()
         except Exception:
             pass
 
-        time.sleep(5)
+        time.sleep(30)
         #wait = ui.WebDriverWait(driver, 30)
         #wait.until(lambda driver: driver.find_element_by_id("training_report"))
 
@@ -53,11 +53,17 @@ def training(driver):
 
 
 
-        training_parent = driver.find_element_by_id("training_report")
-        training_table = training_parent.find_elements_by_class_name('report_table');
 
-        file_ = open("training_reports/"+training_date+".html", 'w')
-        file_.write(training_parent.get_attribute("innerHTML").encode('UTF-8'))
-        file_.close()
+        try:
+            training_parent = driver.find_element_by_id("training_report")
+            training_table = training_parent.find_elements_by_class_name('report_table');
+
+            file_ = open("training_reports/"+training_date+".html", 'w')
+            file_.write(training_parent.get_attribute("innerHTML").encode('UTF-8'))
+            file_.close()
+        except Exception:
+            print "failed to find training report..."
+            t = time.time()
+            driver.save_screenshot("errors/"+str(t)+"_login_failed.png")
 
 
