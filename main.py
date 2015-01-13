@@ -28,11 +28,12 @@ if not os.path.exists("upload/training_reports"):
 if not os.path.exists("upload/squad"):
     os.makedirs("upload/squad")
 
-login.login(driver)
-training.training(driver)
-squad.squad(driver)
+if login.login(driver):
+    training.training(driver)
+    squad.squad(driver)
 
 
 
+driver.close()
 driver.quit()
 

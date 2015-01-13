@@ -6,15 +6,30 @@ import os
 
 
 def squad(driver):
+    print "trying to load squad page"
     driver.get("http://www.managerzone.com/?p=players&sub=alt")
-    driver.find_element_by_tag_name('head')#wait for load
+    print "page loaded", driver.current_url
+    print "waiting for content"
+    try:
+        driver.find_element_by_tag_name('head')#wait for load
+    except Exception:
+        print "failed to load content"
+        return False
 
-    print driver.current_url
 
     date = time.strftime("%Y-%m-%d")
 
-    table = driver.find_element_by_id("squad_summary")
+    print "getting squad data"
+    try:
+        table = driver.find_element_by_id("squad_summary")
+    except Exception:
+        print "failed to get training data"
+        return False
 
+    print "squad data got, saving to file squad/"+date+".html"
     file_ = open("squad/"+date+".html", 'w')
     file_.write(table.get_attribute("innerHTML").encode('UTF-8'))
     file_.close()
+
+    print "done"
+    return True

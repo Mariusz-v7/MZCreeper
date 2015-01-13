@@ -44,7 +44,8 @@ def load_main_page_and_log_in(driver):
             load_main_page(driver)
         else:
             print "unable to load main page... program is terminating..."
-            sys.exit()
+            return False
+    return True
 
 def send_login_data(driver):
     global passwd, login
@@ -79,13 +80,18 @@ def wait_for_login_response(driver):
     if not logged_in:
         print "failed to login"
         driver.save_screenshot("errors/"+str(t)+"_login_failed.png")
-        sys.exit()
+        return False
+    return True
 
 def login(driver):
     global passwd, login
 
     get_login_data()
-    load_main_page_and_log_in(driver)
-    wait_for_login_response(driver)
+    if not load_main_page_and_log_in(driver):
+        return False
+    if not wait_for_login_response(driver):
+        return False
+
+    return True
 
 

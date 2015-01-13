@@ -31,15 +31,16 @@ def load_training_page(driver):
             load_training_page(driver)
         else:
             print "unable to load training page... program is terminating..."
-            sys.exit()
+            return False
+    return True
 def select_day(driver, day):
     print "trying to select " + days_names[day] + " training"
     time.sleep(30)
     try:
         link = driver.find_element_by_id("training_report_header_"+str(day)).find_elements_by_tag_name("a")[0].click()
-        print days_names[day] + "loaded successfully"
+        print days_names[day] + " loaded successfully"
     except Exception:
-        print "failed"
+        print "failed (already selected?)"
         pass
 
     time.sleep(30)
@@ -54,6 +55,8 @@ def get_training(driver, training_date):
         file_ = open("training_reports/"+training_date+".html", 'w')
         file_.write(training_parent.get_attribute("innerHTML").encode('UTF-8'))
         file_.close()
+
+        print "done"
     except Exception:
         print "failed to find training report..."
         t = time.time()
@@ -70,7 +73,8 @@ def training(driver):
     #1 - wtorek
     #etc
     ###
-    load_training_page(driver)
+    if not load_training_page(driver):
+        return False
 
     today_date = time.strftime("%Y-%m-%d")
     today_daynumber = int(time.strftime("%w"))
@@ -89,6 +93,8 @@ def training(driver):
 
         select_day(driver, i)
         get_training(driver, training_date)
+
+    return True
 
 
 
