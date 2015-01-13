@@ -12,7 +12,9 @@ import squad
 
 driver = webdriver.PhantomJS("lib/phantomjs")
 
-upload_all.login(driver)
-upload_all.training(driver)
-upload_all.squad(driver)
+if upload_all.login(driver):
+    upload_all.training(driver)
+    upload_all.squad(driver)
 
+driver.close()
+driver.quit()
