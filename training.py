@@ -37,6 +37,7 @@ def select_day(driver, day):
     time.sleep(30)
     try:
         link = driver.find_element_by_id("training_report_header_"+str(day)).find_elements_by_tag_name("a")[0].click()
+        print days_names[day] + "loaded successfully"
     except Exception:
         print "failed"
         pass
