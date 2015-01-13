@@ -11,7 +11,7 @@ import selenium.webdriver.support.ui as ui
 
 
 days_names = ["weekly", "monday", "tuesday", "wednesday", "thurstay", "friday", "saturday"]
-max_fails_before_exit = 1
+max_fails_before_exit = 10
 fails_in_a_row = 0
 
 def load_training_page(driver):
