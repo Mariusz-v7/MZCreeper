@@ -114,7 +114,7 @@ def parse():
                 elif len(atr) == 2:
                     file_.write(str(atr[0])+", "+str(atr[1]))
                 elif len(atr) == 1:
-                    file_.write(str(atr[0]))
+                    file_.write(atr[0].encode('UTF-8'))
                 file_.write('</'+labels[i]+'>')
                 i += 1
 
